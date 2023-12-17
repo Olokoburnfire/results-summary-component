@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- displays site properly based on user's device -->
+
+  <link rel="icon" type="image/png" sizes="32x32" href="./assets/images/favicon-32x32.png">
+  <link rel="stylesheet" href="./style.css">
+  
+  <title>Frontend Mentor | Results summary component</title>
+</head>
+<body>
+  <main class="container">
+    <section class="top-container">
+      <div class="top-wrapper">
+        <h1>Your Result</h1>
+        <div class="score-container">
+          <h2>76</h2>
+          <p>of 100</p>
+        </div>
+        <h2>Great</h2>
+        <p>You scored higher than 65% of the people who have taken these tests.</p>
+      </div>
+    </section>
+    <section class="bottom-container">
+      <h1>Summary</h1>
+      <div class="result-container"></div>
+      <button>Continue</button>     
+      </section>
+  </main>
+  <footer>
+    <div class="attribution">
+      Challenge by  <a href="https://www.frontendmentor.io?ref=challenge" target="_blank"> Frontend Mentor</a>. 
+      Coded by <a href="olokodanaabdulkabir@gmail.com">Olokodana Abdulkabir</a>.
+    </div>
+  </footer>
+
+  
+  
+
+</body>
+
+<!-- JAVASCRIPT FILE -->
+<script>
+  fetch("./data.json")
+    .then((res) => res.json())
+    .then((json) => {
+      for (let i = 0; i < json.length; i++) {
+        const element = json[i];
+        const result_tab =document.createElement("div")
+        const result_icon =document.createElement("img")
+        const result_title =document.createElement("h1")
+        const result_score =document.createElement("h2")
+
+
+        // result tab
+        result_tab.classList.add("result-tab")
+        if (element.category == "Reaction") {
+          result_tab.classList.add("reaction")
+        } else if ( element.category == "Memory") {
+          result_tab.classList.add("memory")
+        } else if ( element.category == "Verbal") {
+          result_tab.classList.add("verbal")
+        } else {
+          result_tab.classList.add("visual")
+        }
+
+
+        // icon
+        result_icon.classList.add("icon")
+        result_icon.src = element.icon
+        result_tab.appendChild(result_icon)
+        // result-name
+        result_title.innerHTML = element.category
+        result_title.classList.add("result-title")
+        result_tab.appendChild(result_title)
+        // Result score
+        result_score.innerHTML = ` ${element.score} <span> / 100 </span>`
+        result_score.classList.add("result-score")
+        result_tab.appendChild(result_score)
+
+        // the entire data 
+        document.querySelector(".result-container").appendChild(result_tab)
+      } 
+    })
+</script>
+</html>
